@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bentley Studios · MSFS city landmarks and bridges</title>
+<meta name="description" content="Bentley Studios builds city landmark and bridge scenery for Microsoft Flight Simulator 2020 and 2024, from OpenStreetMap data.">
+<link rel="icon" href="assets/logo.png">
+<style>
+@font-face{font-family:Brico;src:url("assets/Bricolage.ttf");font-weight:200 800;font-display:swap}
+@font-face{font-family:DMMono;src:url("assets/DMMono.ttf");font-display:swap}
+:root{--bg:#0B1626;--panel:#122842;--ink:#F4EFE6;--muted:#A9B4C2;--sun:#F2A541;--line:#24405F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Brico,system-ui,sans-serif}
+a{color:var(--sun)}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;gap:16px;padding:22px 0}
+header img{width:56px;height:56px}
+header .name{font-weight:800;font-size:22px;letter-spacing:-.5px}
+header .name small{display:block;font:500 12px DMMono,monospace;letter-spacing:5px;color:var(--sun)}
+nav{margin-left:auto;display:flex;gap:20px;font-size:15px}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;padding:48px 0 64px}
+.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.02;margin:0 0 18px;letter-spacing:-1.5px;font-weight:800}
+.hero p{color:var(--muted);font-size:19px;margin:0 0 26px}
+.hero img{width:100%;max-width:380px;justify-self:center}
+.btn{display:inline-block;background:var(--sun);color:#1B1206;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:10px}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+section{padding:40px 0;border-top:1px solid var(--line)}
+h2{font-size:28px;margin:0 0 18px;letter-spacing:-.5px}
+.label{font:500 12px DMMono,monospace;letter-spacing:4px;color:var(--sun);text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:6px 0 8px;font-size:19px}
+.card p{margin:0;color:var(--muted);font-size:15.5px}
+.soon{border-style:dashed}
+footer{padding:28px 0 40px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero img{max-width:220px;grid-row:1}.grid{grid-template-columns:1fr}nav{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="assets/logo.png" alt="Bentley Studios logo">
+    <div class="name">BENTLEY<small>STUDIOS</small></div>
+    <nav><a href="#packs">Packs</a><a href="#how">How we build</a><a href="#support">Support</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="label">Microsoft Flight Simulator 2020 · 2024</div>
+      <h1>The bridges and landmarks your city is missing.</h1>
+      <p>Bentley Studios makes city landmark and bridge packs for MSFS: real structures in the right place, at the right height, lit at night, so the cities you fly over look like home.</p>
+      <a class="btn" href="https://secure.simmarket.com/">Shop on simMarket</a><a class="btn ghost" href="https://github.com/DuncanBentley/bentley-studios/discussions">Ask in the forum</a>
+    </div>
+    <img src="assets/logo.png" alt="">
+  </div>
+
+  <section id="packs">
+    <div class="label">Packs</div>
+    <h2>City packs</h2>
+    <div class="grid">
+      <div class="card soon"><div class="label">Coming soon</div><h3>First city pack</h3><p>Our first pack is in production. Follow the forum to vote for the next city.</p></div>
+      <div class="card soon"><div class="label">You choose</div><h3>Request a city</h3><p>Tell us which bridges and landmarks are missing where you fly. The most-requested cities get built first.</p></div>
+      <div class="card soon"><div class="label">Both sims</div><h3>MSFS 2020 + 2024</h3><p>Every pack installs in both simulators from one download.</p></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="label">How we build</div>
+    <h2>Accurate, light, and lit at night</h2>
+    <div class="grid">
+      <div class="card"><h3>Real positions</h3><p>Footprints, spans and heights come from OpenStreetMap survey data, so every structure sits exactly where it stands in real life.</p></div>
+      <div class="card"><h3>Built for frame rate</h3><p>Every model ships with levels of detail and clean exclusion zones, so it replaces the default autogen without clutter or overlap.</p></div>
+      <div class="card"><h3>Night lighting</h3><p>Bridges and towers get night lighting, so dusk and night flights look right.</p></div>
+    </div>
+  </section>
+
+  <section id="support">
+    <div class="label">Support</div>
+    <h2>Need help?</h2>
+    <p style="color:var(--muted)">Post in the <a href="https://github.com/DuncanBentley/bentley-studios/discussions">Bentley Studios forum</a> for install help, bug reports and city requests. Customers who bought on simMarket can also open a ticket there. We reply within 48 hours.</p>
+  </section>
+
+  <footer>© 2026 Bentley Studios. Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL). Not affiliated with Microsoft or Asobo Studio. Fonts: Bricolage Grotesque and DM Mono (SIL Open Font License).</footer>
+</div>
+</body>
+</html>
