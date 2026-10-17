@@ -1,0 +1,184 @@
+/* site.css: styles for this site. The header and footer below are ready; add each section's CSS under
+   "Sections" as you build it (start from references/sections.md). Use tokens only: no raw hex, px font sizes
+   or one-off radii. */
+
+/* tokens: site extensions
+   Extra grounds, drift/animated colours or sizes this site needs, built FROM the system tokens and named here once
+   (e.g. --ground-night: color-mix(in oklab, var(--c-ink) 88%, var(--c-accent));). Never edit tokens.css by hand:
+   to change the system itself, re-run `studio.py direct` (the re-run command with its seed is in tokens.json). */
+:root {
+  --step-figure: clamp(7rem, 3.5rem + 15vw, 17.5rem); /* the one figure-as-image (Swiss move 1); max = 2.5x min */
+  --svg-label: 14px;                                  /* label size in bridge.svg user units (scales with the drawing) */
+  --c-beacon: #d8343a;                                /* aviation obstruction red on the bridge towers (art only) */
+}
+
+/* Header */
+.site-header__inner { display: flex; align-items: center; gap: var(--space-m); padding-block: var(--space-xs); }
+.site-brand { display: inline-flex; align-items: center; gap: var(--space-2xs); margin-right: auto; color: var(--c-ink);
+  text-decoration: none; font-family: var(--font-display); font-weight: var(--heading-weight); font-size: var(--step-1);
+  letter-spacing: var(--heading-tracking); }
+.site-brand img { width: 2.25rem; height: 2.25rem; }
+.site-nav ul { display: flex; gap: var(--space-m); list-style: none; padding: 0; }
+.site-nav a { color: var(--c-ink); font-size: var(--step--1); font-weight: var(--strong-weight); }
+.site-header__cta { min-height: 40px; padding-block: var(--space-3xs); font-size: var(--step--1); }
+@media (max-width: 52em) {
+  .site-header__inner { flex-wrap: wrap; row-gap: 0; }
+  .site-nav { order: 3; width: 100%; overflow-x: auto; }
+  .site-nav ul { gap: var(--space-s); padding-block: var(--space-2xs) var(--space-xs); }
+  .site-nav a { display: inline-flex; align-items: center; min-height: 44px; white-space: nowrap; }
+}
+
+/* Footer */
+.site-footer { margin-top: var(--section-space); padding-block: var(--space-xl) var(--space-l); border-top: var(--border); }
+.site-footer__grid { display: grid; gap: var(--space-l); grid-template-columns: 1fr; }
+.site-footer__mark { font-family: var(--font-display); font-weight: var(--display-weight); font-stretch: var(--display-stretch);
+  font-size: var(--step-6); line-height: var(--leading-display); letter-spacing: var(--display-tracking);
+  text-transform: var(--display-case); overflow-wrap: anywhere; }
+.site-footer__contact address { font-style: normal; margin-top: var(--space-2xs); }
+.site-footer__nav ul { list-style: none; padding: 0; display: grid; gap: var(--space-2xs); }
+.site-footer__nav a, .site-footer__contact a { color: var(--c-ink); }
+.site-footer__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-s); color: var(--c-muted);
+  border-top: var(--border); padding-top: var(--space-s); }
+.site-footer__motion { background: none; border: 0; padding: 0; min-height: 44px; color: inherit; text-decoration: underline;
+  text-underline-offset: 0.2em; }
+.site-footer__legal a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (min-width: 52em) {
+  .site-footer__grid { grid-template-columns: 2fr 1fr 1fr; align-items: end; }
+  .site-footer__mark, .site-footer__legal { grid-column: 1 / -1; }
+}
+
+/* 404 */
+.not-found { min-height: 60svh; display: grid; align-content: center; gap: var(--space-m); }
+
+/* Sections (add yours below, one block per section, in page order) */
+
+/* === sections (from sections.part.css) === */
+
+/* Hero: type only. Headline across columns 1-8; lede and actions pinned to 9-12 at the headline baseline. */
+.hero { display: grid; gap: var(--space-l); padding-block: var(--space-2xl) var(--space-xl); }
+.hero__title { font-size: var(--step-6); max-width: 13ch; }
+.hero__side { display: grid; gap: var(--space-m); max-width: 40ch; }
+.hero__more { color: var(--c-ink); font-weight: var(--strong-weight); }
+@media (min-width: 60em) {
+  .hero { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-m); align-items: end; }
+  .hero__title { grid-column: 1 / span 8; }
+  .hero__side { grid-column: 9 / span 4; padding-bottom: var(--space-2xs); }
+}
+
+/* Section rule: the one choreography (draws left to right as the section enters). */
+.rule { border: 0; height: 2px; background: var(--c-ink); margin: 0 0 var(--space-xl); }
+
+/* Figure as image */
+.figure__grid { display: grid; gap: var(--space-m); align-items: end; }
+.figure__num { font-family: var(--font-display); font-weight: var(--display-weight); font-stretch: 75%;
+  font-size: var(--step-figure); line-height: 0.8; letter-spacing: -0.05em; color: var(--c-accent);
+  font-variant-numeric: tabular-nums; margin: 0; }
+.figure__text { display: grid; gap: var(--space-s); max-width: 46ch; }
+.figure__text p { color: var(--c-muted); }
+@media (min-width: 60em) {
+  .figure__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-m); }
+  .figure__num { grid-column: 1 / span 7; }
+  .figure__text { grid-column: 8 / span 5; padding-bottom: var(--space-s); }
+}
+
+/* PEAK: split stage. The bridge stays put while the five steps scroll past the middle of the screen. */
+.build__grid { display: grid; gap: var(--space-xl); }
+.build__stage { display: grid; gap: var(--space-xs); align-content: start; }
+.build__steps h2 { margin-bottom: var(--space-l); }
+.build__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-xl); counter-reset: step; }
+.build__list li { counter-increment: step; display: grid; grid-template-columns: 3ch 1fr; column-gap: var(--space-s); }
+.build__list li::before { content: counter(step); grid-row: span 2; font-family: var(--font-display);
+  font-weight: var(--display-weight); font-size: var(--step-2); line-height: 1; color: var(--c-accent);
+  font-variant-numeric: tabular-nums; }
+.build__list h3 { font-size: var(--step-2); margin-bottom: var(--space-3xs); }
+.build__list p { color: var(--c-muted); max-width: 44ch; }
+@media (min-width: 60em) {
+  .build__grid { grid-template-columns: 7fr 5fr; column-gap: var(--space-2xl); align-items: start; }
+  .build__stage { position: sticky; top: calc(50svh - 14rem); }
+  .build__list { gap: clamp(var(--space-2xl), 34svh, 20rem); padding-bottom: clamp(var(--space-xl), 24svh, 14rem); }
+}
+
+/* The bridge drawing. Resting state (no JS, reduced motion, paused) is the finished, lit bridge. */
+:root {
+  --night-sky: color-mix(in oklab, var(--c-bg) 70%, black);
+  --lamp: var(--c-accent-raw);
+  --beacon: var(--c-beacon);
+}
+.bridge { width: 100%; height: auto; display: block; background: var(--c-bg); }
+.bridge .b-sky { fill: var(--night-sky); }
+.bridge .b-water { fill: color-mix(in oklab, var(--c-surface) 55%, var(--c-line)); }
+.bridge .b-dash { stroke: var(--c-accent); stroke-width: 2; stroke-dasharray: 8 7; }
+.bridge .b-mark, .bridge .b-dim { stroke: var(--c-muted); stroke-width: 1.5; fill: none; }
+.bridge .b-label { fill: var(--c-muted); font-family: var(--font-body); font-size: var(--svg-label); }
+.bridge .b-solid { fill: var(--c-ink); }
+.bridge .b-truss { fill: var(--c-line); }
+.bridge .b-cable { fill: none; stroke: var(--c-ink); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.bridge .b-hangers line { stroke: var(--c-ink); stroke-width: 1.4; opacity: 0.8; }
+.bridge .b-lamp { fill: var(--lamp); }
+.bridge .b-beacon { fill: var(--beacon); }
+.bridge .b-reflect { fill: var(--lamp); opacity: 0.45; }
+.bridge g { transform-box: fill-box; }
+
+/* Each layer reads its own slice of --p: q = clamp(0, (p - start) / width, 1). */
+@media (prefers-reduced-motion: no-preference) {
+  html.js:not(.motion-paused) .build__grid {
+    --q1: clamp(0, calc(var(--p) * 8), 1);
+    --q2: clamp(0, calc((var(--p) - 0.16) * 6), 1);
+    --q3: clamp(0, calc((var(--p) - 0.36) * 6), 1);
+    --q4: clamp(0, calc((var(--p) - 0.52) * 5), 1);
+    --q5: clamp(0, calc((var(--p) - 0.70) * 5), 1);
+  }
+  html.js:not(.motion-paused) .bridge .b-survey { clip-path: inset(0 calc((1 - var(--q1)) * 100%) 0 0); }
+  html.js:not(.motion-paused) .bridge .b-deck { clip-path: inset(0 calc((1 - var(--q2)) * 100%) 0 0); }
+  html.js:not(.motion-paused) .bridge .b-towers { transform-origin: 50% 100%; transform: scaleY(var(--q3)); }
+  html.js:not(.motion-paused) .bridge .b-cable { stroke-dashoffset: calc(1 - var(--q4)); }
+  html.js:not(.motion-paused) .bridge .b-hangers { opacity: var(--q4); }
+  html.js:not(.motion-paused) .bridge .b-lights { opacity: var(--q5); }
+  html.js:not(.motion-paused) .bridge .b-sky { fill: color-mix(in oklab, var(--night-sky) calc(var(--q5) * 100%), var(--c-bg)); }
+}
+
+/* In the pack: a quiet definition list, separated by space, not rules. */
+.pack { display: grid; gap: var(--space-l); }
+.pack__specs { margin: 0; display: grid; gap: var(--space-l) var(--space-m); grid-template-columns: minmax(0, 1fr); }
+.pack__specs dt { font-family: var(--font-display); font-weight: var(--heading-weight); font-size: var(--step-1); }
+.pack__specs dd { margin: var(--space-3xs) 0 0; color: var(--c-muted); max-width: 34ch; }
+@media (min-width: 40em) { .pack__specs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 60em) {
+  .pack { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-m); }
+  .pack > h2 { grid-column: 1 / span 4; }
+  .pack__specs { grid-column: 5 / span 8; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Cities: an index table; data, so codes and positions use tabular figures. */
+.cities { display: grid; gap: var(--space-l); }
+.cities__head { display: grid; gap: var(--space-xs); max-width: 48ch; }
+.cities__wrap { overflow-x: auto; }
+.cities__table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.cities__table th, .cities__table td { text-align: left; padding: var(--space-s) var(--space-s) var(--space-s) 0; vertical-align: baseline; }
+.cities__table thead th { font-size: var(--step--1); color: var(--c-muted); font-weight: var(--strong-weight); border-bottom: var(--border); }
+.cities__table tbody th { font-family: var(--font-display); font-size: var(--step-2); font-weight: var(--heading-weight); letter-spacing: var(--heading-tracking); }
+.cities__table td { color: var(--c-muted); }
+.cities__table tbody tr + tr > * { border-top: 1px solid var(--c-line); }
+@media (max-width: 40em) { .cities__pos { display: none; } }
+
+/* Close: the one full-bleed colour block (brand amber, ink-dark text). */
+.ask { background: var(--c-accent-raw); color: var(--c-accent-raw-ink); padding-block: var(--section-space); }
+.ask__inner { display: grid; gap: var(--space-l); }
+.ask__title { font-size: var(--step-5); max-width: 14ch; color: inherit; }
+.ask__side { display: grid; gap: var(--space-m); max-width: 40ch; }
+.ask__btn { background: var(--c-accent-raw-ink); color: var(--c-accent-raw); }
+.ask__link { color: inherit; font-weight: var(--strong-weight); text-underline-offset: 0.2em; display: inline-flex; align-items: center; min-height: 44px; }
+.ask :focus-visible { outline-color: var(--c-accent-raw-ink); }
+@media (hover: hover) and (pointer: fine) { .ask .ask__btn:hover { background: var(--c-ink); color: var(--c-bg); } }
+@media (min-width: 60em) {
+  .ask__inner { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-m); align-items: end; }
+  .ask__title { grid-column: 1 / span 8; }
+  .ask__side { grid-column: 9 / span 4; }
+}
+.site-footer { margin-top: 0; }
+
+/* Phones and tablets: the stage sticks to the top as a band, so the bridge keeps building while the steps scroll under it. */
+@media (max-width: 59.99em) {
+  .build__stage { position: sticky; top: 0; z-index: 2; background: var(--c-surface); padding-block: var(--space-2xs); margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+  .build__caption { display: none; }
+}
