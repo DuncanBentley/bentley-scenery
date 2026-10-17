@@ -2,88 +2,263 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bentley Studios · MSFS city landmarks and bridges</title>
-<meta name="description" content="Bentley Studios builds city landmark and bridge scenery for Microsoft Flight Simulator 2020 and 2024, from OpenStreetMap data.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bentley Studios</title>
+<meta name="description" content="City landmark and bridge scenery for Microsoft Flight Simulator 2020 and 2024, built from OpenStreetMap survey data.">
 <link rel="icon" href="assets/logo.png">
 <style>
-@font-face{font-family:Brico;src:url("assets/Bricolage.ttf");font-weight:200 800;font-display:swap}
-@font-face{font-family:DMMono;src:url("assets/DMMono.ttf");font-display:swap}
-:root{--bg:#0B1626;--panel:#122842;--ink:#F4EFE6;--muted:#A9B4C2;--sun:#F2A541;--line:#24405F}
+@font-face{font-family:"Bricolage";src:url("assets/Bricolage.ttf");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Instrument";src:url("assets/InstrumentSans.ttf");font-weight:400 700;font-display:swap}
+@font-face{font-family:"DM Mono";src:url("assets/DMMono.ttf");font-display:swap}
+
+/* Layout: a VFR sectional chart at dusk. Hero is a chart band (contours, a dashed route, waypoints);
+   below it a spec sheet and a survey table, set like chart legend text. One accent: the amber sun. */
+:root{
+  --night:#0C1828;      /* page ground, dusk sky */
+  --chart:#13253B;      /* raised chart surface */
+  --rule:#253E5C;       /* hairlines, contours */
+  --paper:#EEE9DF;      /* primary text, bridge white */
+  --mist:#9FB0C3;       /* secondary text, blue-grey */
+  --sun:#F2A541;        /* the one accent */
+  --display:"Bricolage","Arial Narrow",system-ui,sans-serif;
+  --body:"Instrument",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"DM Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  color-scheme:dark;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Brico,system-ui,sans-serif}
-a{color:var(--sun)}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px}
-header{display:flex;align-items:center;gap:16px;padding:22px 0}
-header img{width:56px;height:56px}
-header .name{font-weight:800;font-size:22px;letter-spacing:-.5px}
-header .name small{display:block;font:500 12px DMMono,monospace;letter-spacing:5px;color:var(--sun)}
-nav{margin-left:auto;display:flex;gap:20px;font-size:15px}
-nav a{color:var(--muted);text-decoration:none}
-nav a:hover{color:var(--ink)}
-.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;padding:48px 0 64px}
-.hero h1{font-size:clamp(34px,6vw,58px);line-height:1.02;margin:0 0 18px;letter-spacing:-1.5px;font-weight:800}
-.hero p{color:var(--muted);font-size:19px;margin:0 0 26px}
-.hero img{width:100%;max-width:380px;justify-self:center}
-.btn{display:inline-block;background:var(--sun);color:#1B1206;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:10px}
-.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:8px}
-section{padding:40px 0;border-top:1px solid var(--line)}
-h2{font-size:28px;margin:0 0 18px;letter-spacing:-.5px}
-.label{font:500 12px DMMono,monospace;letter-spacing:4px;color:var(--sun);text-transform:uppercase}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.card h3{margin:6px 0 8px;font-size:19px}
-.card p{margin:0;color:var(--muted);font-size:15.5px}
-.soon{border-style:dashed}
-footer{padding:28px 0 40px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-@media (max-width:760px){.hero{grid-template-columns:1fr}.hero img{max-width:220px;grid-row:1}.grid{grid-template-columns:1fr}nav{display:none}}
+html{background:var(--night)}
+body{margin:0;background:var(--night);color:var(--paper);font:400 1.0625rem/1.65 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--sun);text-underline-offset:3px}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+h1,h2{font-family:var(--display);font-stretch:80%;font-weight:800;letter-spacing:-.02em;text-wrap:balance;margin:0}
+
+/* header */
+header{display:flex;align-items:center;gap:14px;padding-block:20px}
+header img{width:44px;height:44px;border-radius:10px}
+.brand{font-family:var(--display);font-stretch:80%;font-weight:800;font-size:1.3rem;line-height:1;letter-spacing:-.01em}
+.brand span{display:block;font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:.42em;color:var(--sun);margin-top:4px}
+nav{margin-left:auto;display:flex;gap:26px;align-items:center}
+nav a{color:var(--mist);text-decoration:none;font-size:.95rem}
+nav a:hover{color:var(--paper)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--sun);color:var(--night);font-weight:700;text-decoration:none;padding:11px 20px;border-radius:8px;font-size:.98rem}
+nav a.btn{color:var(--night)}
+.btn.line{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1px var(--rule)}
+.btn.line:hover{box-shadow:inset 0 0 0 1px var(--mist)}
+
+/* hero chart band (full width; the body gutter is cancelled so the chart runs edge to edge) */
+.hero{position:relative;margin:8px calc(-1 * max(16px,env(safe-area-inset-left,0px))) 0;border-block:1px solid var(--rule);overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .inner{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;padding-block:72px 64px}
+.hero h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:.95;margin-block:14px 22px}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.hero p{max-width:34ch;color:var(--mist);font-size:1.15rem;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.legend{align-self:end;justify-self:end;background:color-mix(in srgb,var(--night) 85%,transparent);border:1px solid var(--rule);padding:14px 16px;min-width:0;max-width:300px}
+.legend dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-family:var(--mono);font-size:.78rem}
+.legend dt{color:var(--mist)} .legend dd{margin:0;color:var(--paper)}
+
+/* sections */
+section{padding-block:64px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;border-bottom:1px solid var(--rule)}
+section h2{font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.02;margin-top:10px}
+section .lead{color:var(--mist);margin:14px 0 0;max-width:36ch}
+
+.spec{margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px}
+.spec div{padding-block:18px;border-top:1px solid var(--rule)}
+.spec dt{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sun)}
+.spec dd{margin:6px 0 0;color:var(--paper);max-width:40ch}
+
+.survey{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.survey th{text-align:left;font-family:var(--mono);font-weight:400;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);padding:0 12px 10px 0;border-bottom:1px solid var(--rule)}
+.survey td{padding:16px 12px 16px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+.survey .city{font-family:var(--display);font-stretch:85%;font-weight:700;font-size:1.25rem}
+.survey .code,.survey .pos{font-family:var(--mono);font-size:.85rem;color:var(--mist)}
+.chip{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sun);border:1px solid color-mix(in srgb,var(--sun) 45%,transparent);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.tablewrap{overflow-x:auto}
+.after{margin-top:20px;color:var(--mist)}
+
+.support p{margin:0 0 18px;max-width:58ch;color:var(--mist)}
+footer{padding-block:28px 44px;color:var(--mist);font-size:.88rem;display:flex;flex-wrap:wrap;gap:8px 24px}
+
+@media (max-width:820px){
+  nav a:not(.btn){display:none}
+  .hero .inner{grid-template-columns:1fr;padding-block:48px 40px}
+  .legend{justify-self:start}
+  section{grid-template-columns:1fr;gap:20px;padding-block:48px}
+  .spec{grid-template-columns:1fr}
+  .survey .pos{display:none}
+}
+@media (max-width:440px){ nav .btn{display:none} }
+@media (prefers-reduced-motion:reduce){ *{scroll-behavior:auto} }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <img src="assets/logo.png" alt="Bentley Studios logo">
-    <div class="name">BENTLEY<small>STUDIOS</small></div>
-    <nav><a href="#packs">Packs</a><a href="#how">How we build</a><a href="#support">Support</a></nav>
+    <div class="brand">BENTLEY<span>STUDIOS</span></div>
+    <nav>
+      <a href="#packs">What's in a pack</a>
+      <a href="#cities">Cities</a>
+      <a href="#support">Support</a>
+      <a class="btn" href="https://secure.simmarket.com/">simMarket</a>
+    </nav>
   </header>
-
-  <div class="hero">
-    <div>
-      <div class="label">Microsoft Flight Simulator 2020 · 2024</div>
-      <h1>The bridges and landmarks your city is missing.</h1>
-      <p>Bentley Studios makes city landmark and bridge packs for MSFS: real structures in the right place, at the right height, lit at night, so the cities you fly over look like home.</p>
-      <a class="btn" href="https://secure.simmarket.com/">Shop on simMarket</a><a class="btn ghost" href="https://github.com/DuncanBentley/bentley-studios/discussions">Ask in the forum</a>
-    </div>
-    <img src="assets/logo.png" alt="">
-  </div>
-
-  <section id="packs">
-    <div class="label">Packs</div>
-    <h2>City packs</h2>
-    <div class="grid">
-      <div class="card soon"><div class="label">Coming soon</div><h3>First city pack</h3><p>Our first pack is in production. Follow the forum to vote for the next city.</p></div>
-      <div class="card soon"><div class="label">You choose</div><h3>Request a city</h3><p>Tell us which bridges and landmarks are missing where you fly. The most-requested cities get built first.</p></div>
-      <div class="card soon"><div class="label">Both sims</div><h3>MSFS 2020 + 2024</h3><p>Every pack installs in both simulators from one download.</p></div>
-    </div>
-  </section>
-
-  <section id="how">
-    <div class="label">How we build</div>
-    <h2>Accurate, light, and lit at night</h2>
-    <div class="grid">
-      <div class="card"><h3>Real positions</h3><p>Footprints, spans and heights come from OpenStreetMap survey data, so every structure sits exactly where it stands in real life.</p></div>
-      <div class="card"><h3>Built for frame rate</h3><p>Every model ships with levels of detail and clean exclusion zones, so it replaces the default autogen without clutter or overlap.</p></div>
-      <div class="card"><h3>Night lighting</h3><p>Bridges and towers get night lighting, so dusk and night flights look right.</p></div>
-    </div>
-  </section>
-
-  <section id="support">
-    <div class="label">Support</div>
-    <h2>Need help?</h2>
-    <p style="color:var(--muted)">Post in the <a href="https://github.com/DuncanBentley/bentley-studios/discussions">Bentley Studios forum</a> for install help, bug reports and city requests. Customers who bought on simMarket can also open a ticket there. We reply within 48 hours.</p>
-  </section>
-
-  <footer>© 2026 Bentley Studios. Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL). Not affiliated with Microsoft or Asobo Studio. Fonts: Bricolage Grotesque and DM Mono (SIL Open Font License).</footer>
 </div>
+
+<div class="hero">
+  <canvas id="chart" aria-hidden="true"></canvas>
+  <div class="wrap inner">
+    <div>
+      <div class="mono">MSFS 2020 · MSFS 2024 · City scenery</div>
+      <h1>The bridges your city is <em>missing.</em></h1>
+      <p>Landmark and bridge packs for Microsoft Flight Simulator. Real structures in the right place at the right height, lit for night flying.</p>
+      <div class="cta">
+        <a class="btn" href="https://secure.simmarket.com/">Shop on simMarket</a>
+        <a class="btn line" href="https://github.com/DuncanBentley/bentley-studios/discussions/1">Request a city</a>
+      </div>
+    </div>
+    <aside class="legend">
+      <div class="mono">Legend</div>
+      <dl>
+        <dt>Source</dt><dd>OpenStreetMap survey</dd>
+        <dt>Sims</dt><dd>MSFS 2020 + 2024</dd>
+        <dt>Install</dt><dd>Community folder</dd>
+        <dt>Lighting</dt><dd>Dusk and night</dd>
+      </dl>
+    </aside>
+  </div>
+</div>
+
+<div class="wrap">
+  <section id="packs">
+    <div>
+      <div class="mono">What's in a pack</div>
+      <h2>One city, done properly</h2>
+      <p class="lead">Each pack covers one city: the bridges, towers and stadiums you look for on approach.</p>
+    </div>
+    <dl class="spec">
+      <div><dt>Placement</dt><dd>Footprints, spans and heights come from OpenStreetMap survey data, so every structure stands where it does in real life.</dd></div>
+      <div><dt>Replaces autogen</dt><dd>Clean exclusion zones remove the default generic buildings underneath, so nothing doubles up or clips.</dd></div>
+      <div><dt>Frame rate</dt><dd>Each model ships with levels of detail, so the city stays smooth at low altitude.</dd></div>
+      <div><dt>Night lighting</dt><dd>Bridges and towers light up at dusk, for night flights and sunset approaches.</dd></div>
+      <div><dt>Both sims</dt><dd>One download installs in MSFS 2020 and MSFS 2024.</dd></div>
+      <div><dt>Support</dt><dd>Install help and fixes in the forum. Replies within 48 hours.</dd></div>
+    </dl>
+  </section>
+
+  <section id="cities">
+    <div>
+      <div class="mono">On the survey table</div>
+      <h2>Cities we're looking at</h2>
+      <p class="lead">These cities are being surveyed now. Vote in the forum to move one up the list.</p>
+    </div>
+    <div>
+      <div class="tablewrap">
+        <table class="survey">
+          <thead><tr><th>City</th><th>Airport</th><th class="pos">Position</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="city">Pittsburgh</td><td class="code">KPIT</td><td class="pos">40.44°N 80.00°W</td><td><span class="chip">Surveying</span></td></tr>
+            <tr><td class="city">Johannesburg</td><td class="code">FAOR</td><td class="pos">26.20°S 28.05°E</td><td><span class="chip">Surveying</span></td></tr>
+            <tr><td class="city">Durban</td><td class="code">FALE</td><td class="pos">29.86°S 31.02°E</td><td><span class="chip">Surveying</span></td></tr>
+            <tr><td class="city">Cape Town</td><td class="code">FACT</td><td class="pos">33.92°S 18.42°E</td><td><span class="chip">Surveying</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="after">Missing your city? <a href="https://github.com/DuncanBentley/bentley-studios/discussions/1">Add it to the request thread.</a></p>
+    </div>
+  </section>
+
+  <section id="support" class="support">
+    <div>
+      <div class="mono">Support</div>
+      <h2>Need help?</h2>
+    </div>
+    <div>
+      <p>Post in the forum for install help, bug reports and city requests. If you bought on simMarket, you can also open a ticket there.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/DuncanBentley/bentley-studios/discussions/categories/q-a">Ask a question</a>
+        <a class="btn line" href="https://github.com/DuncanBentley/bentley-studios/discussions">Open the forum</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Bentley Studios</span>
+    <span>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL)</span>
+    <span>Not affiliated with Microsoft or Asobo Studio</span>
+  </footer>
+</div>
+
+<script>
+// Hero: a dusk sectional chart. Contour lines from a smooth height field, a dashed route between waypoints,
+// and one aircraft flying it. Draws a complete still frame first; animates only the aircraft.
+(function(){
+  const cv=document.getElementById('chart'), ctx=cv.getContext('2d');
+  const css=getComputedStyle(document.documentElement);
+  const C={rule:css.getPropertyValue('--rule').trim(),mist:css.getPropertyValue('--mist').trim(),
+           sun:css.getPropertyValue('--sun').trim(),paper:css.getPropertyValue('--paper').trim()};
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,dpr,base,route,t=.08;
+  function field(x,y){ // smooth pseudo-terrain
+    return Math.sin(x*.0062+1.3)*Math.cos(y*.0081-.4)+.6*Math.sin((x+y)*.0043+2.1)+.35*Math.cos(x*.013-y*.006);
+  }
+  function at(u){const [p0,p1,p2,p3]=route,m=1-u;
+    return [0,1].map(k=>m*m*m*p0[k]+3*m*m*u*p1[k]+3*m*u*u*p2[k]+u*u*u*p3[k]);}
+  function build(){
+    dpr=Math.min(devicePixelRatio||1,2); W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*dpr; cv.height=H*dpr;
+    const off=document.createElement('canvas'); off.width=cv.width; off.height=cv.height;
+    const g=off.getContext('2d'); g.scale(dpr,dpr);
+    // contours via marching squares on a coarse grid
+    const s=14, cols=Math.ceil(W/s)+1, rows=Math.ceil(H/s)+1, v=[];
+    for(let j=0;j<rows;j++){v[j]=[];for(let i=0;i<cols;i++)v[j][i]=field(i*s,j*s);}
+    g.lineWidth=1; g.strokeStyle=C.rule;
+    for(let k=-1.44;k<=1.6;k+=.32){
+      g.globalAlpha=.5+.3*Math.abs(k)/1.6; g.beginPath();
+      for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){
+        const a=v[j][i],b=v[j][i+1],c=v[j+1][i+1],d=v[j+1][i]; const pts=[];
+        const e=(p,q,x1,y1,x2,y2)=>{if((p<k)!==(q<k)){const f=(k-p)/(q-p);pts.push([x1+(x2-x1)*f,y1+(y2-y1)*f]);}};
+        const x=i*s,y=j*s; e(a,b,x,y,x+s,y); e(b,c,x+s,y,x+s,y+s); e(d,c,x,y+s,x+s,y+s); e(a,d,x,y,x,y+s);
+        if(pts.length>=2){g.moveTo(pts[0][0],pts[0][1]);g.lineTo(pts[1][0],pts[1][1]);}
+        if(pts.length===4){g.moveTo(pts[2][0],pts[2][1]);g.lineTo(pts[3][0],pts[3][1]);}
+      }
+      g.stroke();
+    }
+    g.globalAlpha=1;
+    // route: a smooth curve, kept to the right half on wide screens so it stays clear of the headline
+    const wide=W>820, x0=wide?W*.5:W*.08;
+    route=wide?[[x0,H*.86],[W*.64,H*.18],[W*.82,H*.70],[W*1.03,H*.12]]
+              :[[x0,H*.98],[W*.40,H*.80],[W*.85,H*.98],[W*1.05,H*.78]];
+    g.setLineDash([7,7]); g.strokeStyle=C.sun; g.globalAlpha=.75; g.lineWidth=1.6;
+    g.beginPath(); g.moveTo(...route[0]); g.bezierCurveTo(...route[1],...route[2],...route[3]); g.stroke();
+    g.setLineDash([]); g.globalAlpha=1;
+    // waypoints: open triangles with mono labels (the chart symbol for a reporting point)
+    if(wide){
+      g.font='500 11px "DM Mono", monospace';
+      [[.22,'BRDG'],[.5,'TOWR'],[.78,'STDM']].forEach(([u,lab])=>{const [x,y]=at(u);
+        g.strokeStyle=C.paper;g.lineWidth=1.4;g.beginPath();
+        g.moveTo(x,y-7);g.lineTo(x+6.5,y+5);g.lineTo(x-6.5,y+5);g.closePath();g.stroke();
+        g.fillStyle=C.mist;g.fillText(lab,x+11,y+4);});
+    }
+    base=off;
+  }
+  function frame(){
+    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height); ctx.drawImage(base,0,0);
+    ctx.scale(dpr,dpr);
+    const u=still?.64:(t%1), [x,y]=at(u), [x2,y2]=at(Math.min(u+.002,1)), ang=Math.atan2(y2-y,x2-x);
+    ctx.save(); ctx.translate(x,y); ctx.rotate(ang); ctx.fillStyle=C.paper;
+    ctx.beginPath(); ctx.moveTo(13,0); ctx.lineTo(-9,-2); ctx.lineTo(-11,0); ctx.lineTo(-9,2); ctx.closePath(); ctx.fill();
+    ctx.fillRect(-3,-10,4,20); ctx.fillRect(-11,-5,2.5,10); ctx.restore();
+    if(!still){t+=.0009; requestAnimationFrame(frame);}
+  }
+  function init(){build();frame();}
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(init);
+  let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{build(); if(still)frame();},150);});
+})();
+</script>
 </body>
 </html>
